@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'post_model.dart';
 
 class ApiService {
-  final String url = 'https://www.ipophil.gov.ph/wp-json/wp/v2/posts';
+  final String url = 'http://sbg.addu.edu.ph/wp-json/wp/v2/posts';
   Dio dio = Dio();
 
   Future<List<Post>> fetchPosts() async {

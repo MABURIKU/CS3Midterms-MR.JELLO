@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../post_model.dart';
 import '../api_service.dart';
 
@@ -21,14 +22,24 @@ class _PostListScreenState extends State<PostListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF6249E9),
       appBar: AppBar(
-        title: const Text('Posts'),
+        backgroundColor: Color(0xFF6249E9),
+        title: const Text(
+          'Posts',
+          style: TextStyle(color: Colors.white),
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
+        centerTitle: true,
       ),
       body: FutureBuilder<List<Post>>(
         future: futurePosts,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+                child: CircularProgressIndicator(
+              color: Colors.white,
+            ));
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData) {
@@ -36,36 +47,40 @@ class _PostListScreenState extends State<PostListScreen> {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 final post = snapshot.data![index];
+
+                String dateString = post.dateGmt;
+
+                DateTime dateTime = DateTime.parse(dateString);
+
+                String formattedDate =
+                    DateFormat('MMMM d, y h:mm a').format(dateTime);
+
                 return Container(
-                  width: MediaQuery.of(context).size.width * 0.8, // Use 80% of screen width
-                  margin: const EdgeInsets.all(8), // Adjusted margin
+                  margin: const EdgeInsets.all(8),
                   child: Card(
-                    elevation: 2, // Reduced elevation for a flatter appearance
+                    margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
                     child: Padding(
-                      padding: const EdgeInsets.all(10.0), // Adjusted padding
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             post.title,
                             style: const TextStyle(
-                              fontSize: 16, // Reduced font size for title
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(height: 5),
                           Text(
-                            post.dateGmt, // Display the date_gmt
+                            formattedDate,
                             style: const TextStyle(
-                              fontSize: 10, // Reduced font size for date
-                              color: Colors.grey,
+                              fontSize: 12,
+                              color: Color.fromARGB(255, 116, 116, 116),
                             ),
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            post.excerpt, // Display the excerpt
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis, // Optional: Limit lines
+                            post.excerpt,
                           ),
                         ],
                       ),

@@ -1,3 +1,5 @@
+import 'package:html_unescape/html_unescape.dart';
+
 class Post {
   final int id;
   final String title;
@@ -22,6 +24,9 @@ class Post {
   }
 
   static String _stripHtml(String html) {
-    return html.replaceAll(RegExp(r'<[^>]*>'), ''); // Remove HTML tags
+    String text = html.replaceAll(RegExp(r'<[^>]*>'), '');
+
+    var unescape = HtmlUnescape();
+    return unescape.convert(text);
   }
 }
