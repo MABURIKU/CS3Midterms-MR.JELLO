@@ -7,13 +7,13 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-      double maxWidth = 400; // Reduced maxWidth
+      double maxWidth = 400;
 
       return Scaffold(
         backgroundColor: Colors.white,
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.all(40.0), // Reduced padding
+            padding: const EdgeInsets.all(40.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -25,9 +25,7 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(height: 5),
                 const Text(
                   'Home',
-                  style: TextStyle(
-                      fontSize: 30, // Reduced font size
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
 
                 SizedBox(

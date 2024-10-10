@@ -43,51 +43,87 @@ class _PostListScreenState extends State<PostListScreen> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                final post = snapshot.data![index];
+            return Center(
+              child: Container(
+                child: ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    final post = snapshot.data![index];
 
-                String dateString = post.dateGmt;
+                    String dateString = post.dateGmt;
 
-                DateTime dateTime = DateTime.parse(dateString);
+                    DateTime dateTime = DateTime.parse(dateString);
 
-                String formattedDate =
-                    DateFormat('MMMM d, y h:mm a').format(dateTime);
+                    String formattedDate =
+                        DateFormat('MMMM d, y h:mm a').format(dateTime);
 
-                return Container(
-                  margin: const EdgeInsets.all(8),
-                  child: Card(
-                    margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    return Container(
+                      // color: Colors.amber,
+                      margin: const EdgeInsets.all(8),
+                      child: Wrap(
                         children: [
-                          Text(
-                            post.title,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                          Center(
+                            child: Container(
+                              width: 700,
+                              child: Card(
+                                margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        post.title,
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        formattedDate,
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          color: Color.fromARGB(
+                                              255, 116, 116, 116),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        post.excerpt,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      const SizedBox(height: 20),
+                                      TextButton(
+                                        onPressed: () {},
+                                        style: TextButton.styleFrom(
+                                            foregroundColor: Colors.white,
+                                            backgroundColor:
+                                                const Color(0xFF6249E9),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            padding: EdgeInsets.fromLTRB(
+                                                25, 15, 25, 15)),
+                                        child: const Text('View Post',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 16)),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                          Text(
-                            formattedDate,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Color.fromARGB(255, 116, 116, 116),
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            post.excerpt,
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                );
-              },
+                    );
+                  },
+                ),
+              ),
             );
           } else {
             return const Center(child: Text('No posts available'));
